@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Straw-Freelament PID Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="navbar">
+<img src="/images/abra.png" id="logoStatus" alt="logo">
+<div class="navbar-title"><b>Live Video Monitoring and Control for Straw-Freelament Machine</b></div>
+<img id="settingsBtn" src="/images/settings.png" class="settings-icon" alt="Settings">
+<span id="navStatusDot" class="nav-status-dot offline"></span>
+</div>
+
+<div id="warningModal" class="modal">
+<div class="modal-content-warning">
+<div class="warning-icon">⚠️</div>
+<h3 class="warning-title">WARNING!</h3>
+</div>
+</div>
+
+<div id="confirmModal" class="modal">
+<div class="modal-content-warning">
+<h3 class="warning-title">Apply settings?</h3>
+<p>These changes will be sent to the hardware.</p>
+<button id="confirmSave" class="confirm">Yes</button>
+<button id="cancelSave" class="cancel">No</button>
+</div>
+</div>
+
+<div id="sideNav" class="side-nav">
+<button class="close-btn" id="closeNav">&times;</button>
+
+<div id="sideNavButtons" class="side-nav-buttons">
+<button id="logoutBtn">Logout Dashboard</button>
+<button id="showLoginBtn">Login Admin Panel</button>
+</div>
+
+<form id="loginForm" style="display:none">
+<label>Username<input type="text" id="adminUser" required></label>
+<label>Password<input type="password" id="adminPass" required></label>
+<button type="submit">Login</button>
+</form>
+
+<div id="adminContent" style="display:none">
+
+<div class="current-panel">
+<h4>Current PID Values</h4>
+<div class="current-values">
+<div class="current-card"><div class="label">Kp</div><div class="value" id="currentKp">0</div></div>
+<div class="current-card"><div class="label">Ki</div><div class="value" id="currentKi">0</div></div>
+<div class="current-card"><div class="label">Kd</div><div class="value" id="currentKd">0</div></div>
+</div>
+</div>
+
+<div class="tuning-panel">
+<h3>PID Tuning</h3>
+
+<div class="tuning-grid">
+<input id="kpInput" type="number" step="0.01" placeholder="Kp">
+<input id="kiInput" type="number" step="0.01" placeholder="Ki">
+<input id="kdInput" type="number" step="0.01" placeholder="Kd">
+</div>
+
+<div class="button-row">
+<button id="saveSettings">Save Settings</button>
+<button id="resetDefaults">Reset Defaults</button>
+</div>
+
+<button id="panelLogout">Logout</button>
+</div>
+
+</div>
+</div>
+
+<div class="content">
+
+<div class="camera-box" id="cameraBox">
+<div class="live-indicator">LIVE</div>
+<iframe src="http://192.168.22.241"></iframe>
+<button class="fullscreen-btn" onclick="toggleFullScreen()">⛶</button>
+</div>
+
+<div class="control-box">
+
+<h2>ESP32 PID Temperature Control</h2>
+
+<div class="display-box">
+Current Temp: <span id="temp">0</span> °C
+<button id="chartBtn" class="chart-btn">📈</button>
+</div>
+
+<div class="setpoint-input">
+<div class="display-box">Setpoint: <span id="setp">0</span> °C</div>
+<input id="newSet" type="number">
+<button onclick="setPoint()">Set</button>
+<div class="display-box">Output: <span id="output">0</span></div>
+</div>
+
+<div class="setpoint-input">
+<div class="display-box">RPM: <span id="rpmDisplay">0</span></div>
+<input id="newRpm" type="number" min="0" max="80">
+<button onclick="setRpm()">Set</button>
+</div>
+
+</div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
