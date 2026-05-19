@@ -1,0 +1,6 @@
+.vscode/
+*.log
+build/
+node_modules/
+config.h
+.env
